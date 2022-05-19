@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textView"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    tools:text="tab 1" />

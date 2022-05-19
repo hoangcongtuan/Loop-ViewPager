@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TestViewPager2</string>
+    <string name="max_number_of_badges">99+</string>
+</resources>
