@@ -1,10 +1,14 @@
 package com.nshmura.recyclertablayout;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +38,11 @@ public abstract class UnDetachableFragmentPagerAdapter extends CustomPagerAdapte
     public void startUpdate(ViewGroup container) {
         if (container.getId() == View.NO_ID) {
             throw new IllegalStateException(
-                "ViewPager with adapter " + this + " requires a view id");
+                    "ViewPager with adapter " + this + " requires a view id");
         }
     }
+
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     @SuppressWarnings("ReferenceEquality")
     @Override
@@ -51,19 +57,35 @@ public abstract class UnDetachableFragmentPagerAdapter extends CustomPagerAdapte
         String name = makeFragmentName(container.getId(), itemId);
         Fragment fragment = mFragmentManager.findFragmentByTag(name);
         if (fragment != null) {
-            /*if (DEBUG) Log.v(TAG, "Attaching item #" + itemId + ": f=" + fragment);
-            mCurTransaction.show(fragment); // NOTE: attach せずに show する*/
+            if (DEBUG) Log.v(TAG, "Attaching item #" + itemId + ": f=" + fragment);
+            mCurTransaction.show(fragment); // NOTE: attach せずに show する
         } else {
             fragment = getItem(position);
             if (DEBUG) Log.v(TAG, "Adding item #" + itemId + ": f=" + fragment);
             mCurTransaction.add(container.getId(), fragment,
-                makeFragmentName(container.getId(), itemId));
+                    makeFragmentName(container.getId(), itemId));
         }
         if (fragment != mCurrentPrimaryItem) {
             fragment.setMenuVisibility(false);
             fragment.setUserVisibleHint(false);
         }
 
+        /*Fragment finalFragment = fragment;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurTransaction == null) {
+                    mCurTransaction = mFragmentManager.beginTransaction();
+                }
+                Fragment fragment1;
+                fragment1 = getItem(position);
+                mCurTransaction.add(container.getId(), fragment1,
+                        makeFragmentName(container.getId(), itemId));
+//                mCurTransaction.show(fragment1);
+                mCurTransaction.commit();
+                mCurTransaction = null;
+            }
+        }, 2000);*/
         return fragment;
     }
 
@@ -74,11 +96,11 @@ public abstract class UnDetachableFragmentPagerAdapter extends CustomPagerAdapte
         }
         if (DEBUG) {
             Log.v(TAG, "Detaching item #"
-                + getItemId(position)
-                + ": f="
-                + object
-                + " v="
-                + ((Fragment) object).getView());
+                    + getItemId(position)
+                    + ": f="
+                    + object
+                    + " v="
+                    + ((Fragment) object).getView());
         }
         mCurTransaction.hide((Fragment) object); // NOTE: detach せずに hide する
         // Fragment が3つの場合に ViewPager.populate が呼ばれると表示すべきページの Fragment を消してしまうのですぐに show してあげる
