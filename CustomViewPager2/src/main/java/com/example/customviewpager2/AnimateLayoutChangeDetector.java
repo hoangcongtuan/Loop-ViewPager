@@ -25,8 +25,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.customviewpager2.infinitylayoutmanager.LoopingLayoutManager;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -47,9 +45,9 @@ final class AnimateLayoutChangeDetector {
         ZERO_MARGIN_LAYOUT_PARAMS.setMargins(0, 0, 0, 0);
     }
 
-    private LoopingLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
-    AnimateLayoutChangeDetector(@NonNull LoopingLayoutManager llm) {
+    AnimateLayoutChangeDetector(@NonNull LinearLayoutManager llm) {
         mLayoutManager = llm;
     }
 

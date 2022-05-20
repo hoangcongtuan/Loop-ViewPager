@@ -141,7 +141,7 @@ public final class ViewPager2 extends ViewGroup {
                 }
             };
 
-    private LoopingLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
     private int mPendingCurrentItem = NO_POSITION;
     private Parcelable mPendingAdapterState;
     RecyclerView mRecyclerView;
@@ -187,7 +187,7 @@ public final class ViewPager2 extends ViewGroup {
         mRecyclerView.setId(ViewCompat.generateViewId());
         mRecyclerView.setDescendantFocusability(FOCUS_BEFORE_DESCENDANTS);
 
-        mLayoutManager = new LoopingLayoutManager(mAccessibilityProvider, context, OrientationHelper.HORIZONTAL, false);
+        mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setScrollingTouchSlop(RecyclerView.TOUCH_SLOP_PAGING);
         setOrientation(context, attrs);

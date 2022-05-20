@@ -29,9 +29,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.customviewpager2.ViewPager2;
 import com.example.customviewpager2.ViewPager2.OnPageChangeCallback;
-import com.example.customviewpager2.infinitylayoutmanager.LoopingLayoutManager;
 
 import java.lang.annotation.Retention;
 import java.util.Locale;
@@ -60,7 +58,7 @@ final class ScrollEventAdapter extends RecyclerView.OnScrollListener {
     private OnPageChangeCallback mCallback;
     private final @NonNull ViewPager2 mViewPager;
     private final @NonNull RecyclerView mRecyclerView;
-    private final @NonNull LoopingLayoutManager mLayoutManager;
+    private final @NonNull LinearLayoutManager mLayoutManager;
 
     // state related fields
     private @AdapterState int mAdapterState;
@@ -78,7 +76,7 @@ final class ScrollEventAdapter extends RecyclerView.OnScrollListener {
         mViewPager = viewPager;
         mRecyclerView = mViewPager.mRecyclerView;
         //noinspection ConstantConditions
-        mLayoutManager = (LoopingLayoutManager) mRecyclerView.getLayoutManager();
+        mLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
         mScrollValues = new ScrollEventValues();
         resetState();
     }

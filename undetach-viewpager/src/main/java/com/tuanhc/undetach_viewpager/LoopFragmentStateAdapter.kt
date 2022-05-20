@@ -1,10 +1,9 @@
 package com.tuanhc.undetach_viewpager
 
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentViewHolder
 
-abstract class LoopFragmentStateAdapter<T>(private val fa: FragmentActivity) :
+public abstract class LoopFragmentStateAdapter<T>(private val fa: FragmentActivity) :
     UnDetachFragmentStateAdapter(fa) {
     companion object {
         const val NUMBER_OF_LOOPS = 1000000
@@ -16,7 +15,25 @@ abstract class LoopFragmentStateAdapter<T>(private val fa: FragmentActivity) :
         return items.size * NUMBER_OF_LOOPS
     }
 
-    private fun submitList(items: List<T>) {
+    override fun ensureFragment(position: Int) {
+        /*super.ensureFragment(position)*/
+        val realPosition = getRealPosition(position)
+        val realItemId = getItemId(realPosition)
+        if (!mFragments.containsKey(realItemId)) {
+            // TODO(133419201): check if a Fragment provided here is a new Fragment
+            val newFragment = createFragment(position)
+            newFragment.setInitialSavedState(mSavedStates[realItemId])
+            mFragments.put(realItemId, newFragment)
+        }
+    }
+
+    override fun getFragmentOfViewHolder(holder: com.example.customviewpager2.FragmentViewHolder): Fragment {
+        val position = getRealPosition(holder.adapterPosition)
+        val itemId = getItemId(position)
+        return mFragments.get(itemId)!!
+    }
+
+    public fun submitList(items: List<T>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
@@ -28,5 +45,12 @@ abstract class LoopFragmentStateAdapter<T>(private val fa: FragmentActivity) :
 
     private fun getItemAt(position: Int): T {
         return items[getRealPosition(position)]
+    }
+
+    override fun onBindViewHolder(
+        holder: com.example.customviewpager2.FragmentViewHolder,
+        position: Int
+    ) {
+        super.onBindViewHolder(holder, getRealPosition(position))
     }
 }

@@ -79,8 +79,8 @@ public abstract class FragmentStateAdapter extends
 
     // Fragment bookkeeping
     @SuppressWarnings("WeakerAccess") // to avoid creation of a synthetic accessor
-    final LongSparseArray<Fragment> mFragments = new LongSparseArray<>();
-    private final LongSparseArray<Fragment.SavedState> mSavedStates = new LongSparseArray<>();
+    protected final LongSparseArray<Fragment> mFragments = new LongSparseArray<>();
+    protected final LongSparseArray<Fragment.SavedState> mSavedStates = new LongSparseArray<>();
     private final LongSparseArray<Integer> mItemIdToViewHolder = new LongSparseArray<>();
 
     private FragmentMaxLifecycleEnforcer mFragmentMaxLifecycleEnforcer;
@@ -161,7 +161,7 @@ public abstract class FragmentStateAdapter extends
     }
 
     @Override
-    public final void onBindViewHolder(final @NonNull FragmentViewHolder holder, int position) {
+    public void onBindViewHolder(final @NonNull FragmentViewHolder holder, int position) {
         final long itemId = holder.getItemId();
         final int viewHolderId = holder.getContainer().getId();
         final Long boundItemId = itemForViewHolder(viewHolderId); // item currently bound to the VH
@@ -260,7 +260,7 @@ public abstract class FragmentStateAdapter extends
         return boundItemId;
     }
 
-    private void ensureFragment(int position) {
+    protected void ensureFragment(int position) {
         long itemId = getItemId(position);
         if (!mFragments.containsKey(itemId)) {
             // TODO(133419201): check if a Fragment provided here is a new Fragment
@@ -276,12 +276,14 @@ public abstract class FragmentStateAdapter extends
         gcFragments();
     }
 
+    public abstract Fragment getFragmentOfViewHolder(@NonNull final FragmentViewHolder holder);
     /**
      * @param holder that has been bound to a Fragment in the {@link #onBindViewHolder} stage.
      */
     @SuppressWarnings("WeakerAccess") // to avoid creation of a synthetic accessor
     void placeFragmentInViewHolder(@NonNull final FragmentViewHolder holder) {
-        Fragment fragment = mFragments.get(holder.getItemId());
+        /*Fragment fragment = mFragments.get(holder.getItemId());*/
+        Fragment fragment = getFragmentOfViewHolder(holder);
         if (fragment == null) {
             throw new IllegalStateException("Design assumption violated.");
         }

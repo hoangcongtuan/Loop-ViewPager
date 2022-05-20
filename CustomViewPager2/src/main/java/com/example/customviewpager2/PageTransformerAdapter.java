@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.customviewpager2.ViewPager2.OnPageChangeCallback;
 import com.example.customviewpager2.ViewPager2.PageTransformer;
-import com.example.customviewpager2.infinitylayoutmanager.LoopingLayoutManager;
 
 import java.util.Locale;
 
@@ -30,11 +29,11 @@ import java.util.Locale;
  * Translates {@link OnPageChangeCallback} events to {@link PageTransformer} events.
  */
 final class PageTransformerAdapter extends OnPageChangeCallback {
-    private final LoopingLayoutManager mLayoutManager;
+    private final LinearLayoutManager mLayoutManager;
 
     private PageTransformer mPageTransformer;
 
-    PageTransformerAdapter(LoopingLayoutManager layoutManager) {
+    PageTransformerAdapter(LinearLayoutManager layoutManager) {
         mLayoutManager = layoutManager;
     }
 
