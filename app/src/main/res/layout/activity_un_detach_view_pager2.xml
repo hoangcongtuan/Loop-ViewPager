@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".undetachviewpager2.UnDetachViewPager2Activity">
+    tools:context=".LoopViewPager2Activity">
 
     <com.example.customviewpager2.ViewPager2
         android:layout_width="match_parent"

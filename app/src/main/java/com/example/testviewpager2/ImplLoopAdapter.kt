@@ -1,4 +1,4 @@
-package com.example.testviewpager2.undetachviewpager2
+package com.example.testviewpager2
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

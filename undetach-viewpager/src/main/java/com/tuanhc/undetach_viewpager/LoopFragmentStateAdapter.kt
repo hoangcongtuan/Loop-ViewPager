@@ -5,14 +5,11 @@ import androidx.fragment.app.FragmentActivity
 
 public abstract class LoopFragmentStateAdapter<T>(private val fa: FragmentActivity) :
     UnDetachFragmentStateAdapter(fa) {
-    companion object {
-        const val NUMBER_OF_LOOPS = 1000000
-    }
 
     private val items: MutableList<T> = mutableListOf()
 
     override fun getItemCount(): Int {
-        return items.size * NUMBER_OF_LOOPS
+        return Int.MAX_VALUE
     }
 
     override fun ensureFragment(position: Int) {

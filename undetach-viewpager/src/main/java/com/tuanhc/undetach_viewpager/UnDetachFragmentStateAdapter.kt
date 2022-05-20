@@ -26,11 +26,11 @@ abstract class UnDetachFragmentStateAdapter(private val fa: FragmentActivity) : 
         holder.setIsRecyclable(false)
     }*/
 
-    override fun onBindViewHolder(
+   /* override fun onBindViewHolder(
         holder: com.example.customviewpager2.FragmentViewHolder,
         position: Int,
         payloads: MutableList<Any>
     ) {
         super.onBindViewHolder(holder, position, payloads)
-        holder.setIsRecyclable(false)    }
+        holder.setIsRecyclable(false)    }*/
 }
